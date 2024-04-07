@@ -15,6 +15,7 @@ public class Station {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "station_id")
     private long id;
+    @Enumerated(EnumType.STRING)
     private StationType type;
     private String description;
     @Column(name = "max_capacity")
