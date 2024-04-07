@@ -1,9 +1,12 @@
 package kaem0n.u5w1d5.dao;
 
 import kaem0n.u5w1d5.entities.Station;
+import kaem0n.u5w1d5.entities.StationType;
 import kaem0n.u5w1d5.exceptions.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class StationService {
@@ -27,5 +30,9 @@ public class StationService {
         Station found = this.findById(id);
         sd.delete(found);
         System.out.println("Station ID " + found.getId() + " deleted from db.");
+    }
+
+    public List<Station> findByTypeAndCity(StationType type, String city) {
+        return sd.findByTypeAndCity(type, city);
     }
 }

@@ -10,6 +10,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Random;
 
 @Component
@@ -59,6 +60,16 @@ public class Runner implements CommandLineRunner {
         rs.save(new Reservation(LocalDate.now().plusDays(2), us.findById(1), ss.findById(2))); // SAVED/ALREADY TAKEN
         rs.save(new Reservation(LocalDate.now().plusDays(2), us.findById(3), ss.findById(2))); // STATION NOT AVAILABLE
         rs.save(new Reservation(LocalDate.now().plusDays(2), us.findById(3), ss.findById(3))); // SAVED/ALREADY TAKEN
+
+        System.out.println();
+
+        // STATION SEARCH
+        List<Station> romeMeetingRooms = ss.findByTypeAndCity(StationType.MEETING_ROOM, "Rome");
+        romeMeetingRooms.forEach(station -> System.out.println("- " + station));
+        List<Station> milanPrivateRooms = ss.findByTypeAndCity(StationType.PRIVATE, "Milan");
+        milanPrivateRooms.forEach(station -> System.out.println("- " + station));
+        List<Station> berlinOpenSpaces = ss.findByTypeAndCity(StationType.OPENSPACE, "Berlin");
+        berlinOpenSpaces.forEach(station -> System.out.println("- " + station));
 
         System.out.println();
     }
