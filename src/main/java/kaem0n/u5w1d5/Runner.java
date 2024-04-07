@@ -4,14 +4,12 @@ import kaem0n.u5w1d5.dao.BuildingService;
 import kaem0n.u5w1d5.dao.ReservationService;
 import kaem0n.u5w1d5.dao.StationService;
 import kaem0n.u5w1d5.dao.UserService;
-import kaem0n.u5w1d5.entities.Building;
-import kaem0n.u5w1d5.entities.Station;
-import kaem0n.u5w1d5.entities.StationType;
-import kaem0n.u5w1d5.entities.User;
+import kaem0n.u5w1d5.entities.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
 import java.util.Random;
 
 @Component
@@ -27,6 +25,8 @@ public class Runner implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
+        System.out.println();
+
         // DATABASE FILL
         bs.save(new Building("EPICODE", "Rome"));
         bs.save(new Building("EPICODE", "Milan"));
@@ -47,5 +47,11 @@ public class Runner implements CommandLineRunner {
             ss.save(new Station(StationType.MEETING_ROOM, "Meeting Room 2", new Random().nextInt(10, 20), bs.findById(i)));
             ss.save(new Station(StationType.MEETING_ROOM, "Meeting Room 3", new Random().nextInt(10, 20), bs.findById(i)));
         }
+
+        rs.save(new Reservation(LocalDate.now(), us.findById(1), ss.findById(1)));
+        rs.save(new Reservation(LocalDate.now(), us.findById(2), ss.findById(1)));
+        rs.save(new Reservation(LocalDate.now(), us.findById(1), ss.findById(3)));
+
+        System.out.println();
     }
 }

@@ -19,7 +19,7 @@ public class User {
     private String username;
     private String name;
     private String email;
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     private List<Reservation> reservations;
 
     public User(String username, String name, String email) {

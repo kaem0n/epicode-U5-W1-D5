@@ -14,15 +14,21 @@ public class ReservationService {
 
     public void save(Reservation reservation) {
         List<Reservation> stationCheck = reservation.getStation().getReservations().stream()
-                .filter(el -> el.getReservationDay() == reservation.getReservationDay()).toList();
+                .filter(el -> el.getReservationDay() != reservation.getReservationDay()).toList();
         List<Reservation> userCheck = reservation.getUser().getReservations().stream()
-                .filter(el -> el.getReservationDay() == reservation.getReservationDay()).toList();
+                .filter(el -> el.getReservationDay() != reservation.getReservationDay()).toList();
         if (stationCheck.isEmpty() && userCheck.isEmpty()) {
             rd.save(reservation);
             System.out.println("Station ID " + reservation.getStation().getId() + " on building " +
                     reservation.getStation().getBuilding().getName() + " (" +
                     reservation.getStation().getBuilding().getCity() + ") reserved for user " +
                     reservation.getUser().getUsername() + " on date " + reservation.getReservationDay() + ".");
+        } else if (!stationCheck.isEmpty() && userCheck.isEmpty()) {
+            System.out.println("Station ID " + reservation.getStation().getId() + " is unavailable on date " + reservation.getReservationDay() + ".");
+        } else if (stationCheck.isEmpty()) {
+            System.out.println("User " + reservation.getUser().getUsername() + " has another reservation for this day.");
+        } else {
+            System.out.println("Reservation already taken.");
         }
     }
 
