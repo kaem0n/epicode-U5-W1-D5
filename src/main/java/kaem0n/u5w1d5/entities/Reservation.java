@@ -19,6 +19,7 @@ public class Reservation {
     private long id;
     @Column(name = "reservation_day")
     private LocalDate reservationDay;
+    private LocalDate expiration;
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
@@ -28,6 +29,7 @@ public class Reservation {
 
     public Reservation(LocalDate reservationDay, User user, Station station) {
         this.reservationDay = reservationDay;
+        this.expiration = reservationDay.plusDays(1);
         this.user = user;
         this.station = station;
     }
