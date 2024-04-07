@@ -23,7 +23,7 @@ public class Station {
     @ManyToOne
     @JoinColumn(name = "building_id")
     private Building building;
-    @OneToMany(mappedBy = "station", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "station")
     private List<Reservation> reservations;
 
     public Station(StationType type, String description, int maxCapacity, Building building) {

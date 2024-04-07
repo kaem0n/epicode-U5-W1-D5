@@ -48,9 +48,17 @@ public class Runner implements CommandLineRunner {
             ss.save(new Station(StationType.MEETING_ROOM, "Meeting Room 3", new Random().nextInt(10, 20), bs.findById(i)));
         }
 
-        rs.save(new Reservation(LocalDate.now(), us.findById(1), ss.findById(1)));
-        rs.save(new Reservation(LocalDate.now(), us.findById(2), ss.findById(1)));
-        rs.save(new Reservation(LocalDate.now(), us.findById(1), ss.findById(3)));
+        // TEST RESERVATIONS WITH EXPECTED OUTPUTS
+        rs.save(new Reservation(LocalDate.parse("2020-01-01"), us.findById(1), ss.findById(1))); // CAN'T RESERVE IN THE PAST
+        rs.save(new Reservation(LocalDate.now(), us.findById(1), ss.findById(1))); // CAN'T RESERVE TODAY
+        rs.save(new Reservation(LocalDate.now().plusDays(1), us.findById(1), ss.findById(1))); // SAVED/ALREADY TAKEN
+        rs.save(new Reservation(LocalDate.now().plusDays(1), us.findById(2), ss.findById(1))); // STATION NOT AVAILABLE
+        rs.save(new Reservation(LocalDate.now().plusDays(1), us.findById(1), ss.findById(3))); // USER CAN'T RESERVE
+        rs.save(new Reservation(LocalDate.now().plusDays(3), us.findById(1), ss.findById(1))); // SAVED/ALREADY TAKEN
+        rs.save(new Reservation(LocalDate.now().plusDays(3), us.findById(1), ss.findById(2))); // USER CAN'T RESERVE
+        rs.save(new Reservation(LocalDate.now().plusDays(2), us.findById(1), ss.findById(2))); // SAVED/ALREADY TAKEN
+        rs.save(new Reservation(LocalDate.now().plusDays(2), us.findById(3), ss.findById(2))); // STATION NOT AVAILABLE
+        rs.save(new Reservation(LocalDate.now().plusDays(2), us.findById(3), ss.findById(3))); // SAVED/ALREADY TAKEN
 
         System.out.println();
     }

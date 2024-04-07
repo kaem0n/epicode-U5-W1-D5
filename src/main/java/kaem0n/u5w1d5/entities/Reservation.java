@@ -9,7 +9,6 @@ import java.time.LocalDate;
 
 @NoArgsConstructor
 @Getter
-@ToString
 @Entity
 @Table(name = "reservations")
 public class Reservation {
@@ -32,5 +31,16 @@ public class Reservation {
         this.expiration = reservationDay.plusDays(1);
         this.user = user;
         this.station = station;
+    }
+
+    @Override
+    public String toString() {
+        return "Reservation{" +
+                "id=" + id +
+                ", reservationDay=" + reservationDay +
+                ", expiration=" + expiration +
+                ", user=" + user.getUsername() +
+                ", station=" + station.getDescription() + " " + station.getBuilding().getName() + " (" + station.getBuilding().getCity() + ") " +
+                '}';
     }
 }
